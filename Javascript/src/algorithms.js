@@ -19,7 +19,7 @@ Algorithms.caesarCipher = function (string, shift) {
 
 };
 
-// Write a function that takes two strings and returns the lenght of the longest common substring.
+// Write a function that takes two strings and returns the length of the longest common substring.
 Algorithms.commonSubstrings = function (stringOne, stringTwo) {
 
 };
@@ -38,6 +38,7 @@ Algorithms.fibs = function (number) {
 // Write a function that takes a string and returns true if it's a palindrome, false if it's not.
 // Your solution should take less time and memory than rebuilding the string backward and comparing the two.
 Algorithms.isPalindrome = function (string) {
+
 
 };
 
@@ -72,14 +73,30 @@ Algorithms.sillyYears = function (number) {
 // Time complexity: O(n).
 // Return an array.
 Algorithms.pairSum = function (array, k) {
+  let hash = {};
+  let pairs = []
+  array.forEach(el => {
+    hash[el] = true;
+  });
+  array.forEach(el =>{
+    let searchItem = k - el;
 
+  });
 };
 
 // Given a matrix of integers and coordinates of a rectangular region within the matrix.
 // Find the sum of numbers falling inside the rectangle.
 // Time complexity: O(number of rows * number of columns).
 Algorithms.matrixRegionSum = function (matrix, topLeftCoords, bottomRightCoords) {
-
+  let matrixSum = 0;
+  for(let i = topLeftCoords[0]; i < bottomRightCoords[0]; i++){
+    for(let j = topLeftCoords[1]; j < bottomRightCoords[1]; j++){
+      matrixSum += matrix[i][j];
+    }
+  }
+  return matrixSum;
 };
+
+
 
 })();
