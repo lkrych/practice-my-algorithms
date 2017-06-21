@@ -32,14 +32,26 @@ Algorithms.sumRec = function (numbers) {
 
 // Write a function which returns the first n elements from the fibonnacci sequence, given n.
 Algorithms.fibs = function (number) {
-
+  if (number < 2){
+    return [0,1] ;
+  }
+  let almostFibs = Algorithms.fibs(number - 1);
+  almostFibs = almostFibs.push(almostFibs[almostFibs.length - 1] +
+     almostFibs[almostFibs.length - 2]);
+  return almostFibs;
 };
 
 // Write a function that takes a string and returns true if it's a palindrome, false if it's not.
 // Your solution should take less time and memory than rebuilding the string backward and comparing the two.
 Algorithms.isPalindrome = function (string) {
-
-
+  let idx1 = 0;
+  let idx2 = string.length - 1;
+  while(idx1 < idx2){
+    if(string[idx1] !== string[idx2]){
+      return false;
+    }
+  }
+  return false;
 };
 
 // Implement the Folding Cipher.
