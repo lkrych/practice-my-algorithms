@@ -65,7 +65,18 @@ Algorithms.lcs = function (array) {
 // Write a function that takes a year (four digit integer) and returns an array with the 10 closest subsequent years that meet the following condition:
 // the first two digits summed with the last two digits are equal to the middle two digits.
 Algorithms.sillyYears = function (number) {
-
+  let sillyYears = [];
+  let currentYear = number + 1;
+  while(sillyYears.length < 9) {
+    let charYear = currentYear.toString();
+    let first = charYear.slice(0,2);
+    let middle = charYear.slice(1,3);
+    let end = charYear.slice(2,4);
+    if((parseInt(first) + parseInt(end)) === parseInt(end)){
+      sillyYears.push(currentYear);
+    }
+  }
+  return sillyYears;
 };
 
 // Given an array of integers, return all pairs that sum up to a specified value k.
@@ -74,14 +85,20 @@ Algorithms.sillyYears = function (number) {
 // Return an array.
 Algorithms.pairSum = function (array, k) {
   let hash = {};
-  let pairs = []
+  let pairs = [];
   array.forEach(el => {
     hash[el] = true;
   });
+  let found = {};
   array.forEach(el =>{
     let searchItem = k - el;
-
+    if(hash[searchItem && !found[searchItem]]){
+      pairs.push([searchItem, el]);
+      found[searchItem] = true;
+      found[el] = true;
+    }
   });
+  return pairs;
 };
 
 // Given a matrix of integers and coordinates of a rectangular region within the matrix.
