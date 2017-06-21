@@ -98,86 +98,88 @@ Algorithms.foldingCipher = function (string) {
 };
 //
 // // Write a method that finds all the unique substrings for a word.
-// Algorithms.uniqSubs = function (string) {
-//   let subs = [];
-//   for(let i = 0; i < string.length - 1; i++){
-//     for(let j = i; j < string.length - 1; j++){
-//       subs.push(string.slice(i, j+1));
-//     }
-//   }
-//   return subs;
-// };
+Algorithms.uniqSubs = function (string) {
+  let subs = {};
+  for(let i = 0; i < string.length; i++){
+    for(let j = i; j < string.length; j++){
+      if(!subs[string.slice(i, j+1)])
+      subs[string.slice(i, j+1)] = true;
+    }
+  }
+  return Object.keys(subs);
+};
 //
 //
 // // Given an array of integers (positive and negative) find the largest contiguous subsum (sum of a subarray).
 // // You can solve this trivially in O(n**2) time by considering all subarrays.
 // // Try to solve it in O(n) time with O(1) memory.
-// Algorithms.lcs = function (array) {
-//   let runningSum = 0;
-//   let max = 0;
-//   array.forEach(int => {
-//     runningSum += int;
-//     if (runningSum > max){
-//       max = runningSum;
-//     }
-//     if (runningSum < 0){
-//       runningSum = 0;
-//     }
-//   });
-//   return max;
-// };
+Algorithms.lcs = function (array) {
+  let runningSum = 0;
+  let max = 0;
+  array.forEach(int => {
+    runningSum += int;
+    if (runningSum > max){
+      max = runningSum;
+    }
+    if (runningSum < 0){
+      runningSum = 0;
+    }
+  });
+  return max;
+};
 //
 // // Write a function that takes a year (four digit integer) and returns an array with the 10 closest subsequent years that meet the following condition:
 // // the first two digits summed with the last two digits are equal to the middle two digits.
-// Algorithms.sillyYears = function (number) {
-//   let sillyYears = [];
-//   let currentYear = number + 1;
-//   while(sillyYears.length < 9) {
-//     let charYear = currentYear.toString();
-//     let first = charYear.slice(0,2);
-//     let middle = charYear.slice(1,3);
-//     let end = charYear.slice(2,4);
-//     if((parseInt(first) + parseInt(end)) === parseInt(end)){
-//       sillyYears.push(currentYear);
-//     }
-//   }
-//   return sillyYears;
-// };
+Algorithms.sillyYears = function (number) {
+  let sillyYears = [];
+  let currentYear = number + 1;
+  while(sillyYears.length < 10) {
+    let charYear = currentYear.toString();
+    let first = charYear.slice(0,2);
+    let middle = charYear.slice(1,3);
+    let end = charYear.slice(2,4);
+    if((parseInt(first) + parseInt(end)) === parseInt(middle)){
+      sillyYears.push(currentYear);
+    }
+    currentYear ++;
+  }
+  return sillyYears;
+};
 //
 // // Given an array of integers, return all pairs that sum up to a specified value k.
 // // List the pairs in [min, max] order.
 // // Time complexity: O(n).
 // // Return an array.
-// Algorithms.pairSum = function (array, k) {
-//   let hash = {};
-//   let pairs = [];
-//   array.forEach(el => {
-//     hash[el] = true;
-//   });
-//   let found = {};
-//   array.forEach(el =>{
-//     let searchItem = k - el;
-//     if(hash[searchItem && !found[searchItem]]){
-//       pairs.push([searchItem, el]);
-//       found[searchItem] = true;
-//       found[el] = true;
-//     }
-//   });
-//   return pairs;
-// };
+Algorithms.pairSum = function (array, k) {
+  let hash = {};
+  let pairs = [];
+  array.forEach(el => {
+    hash[el] = true;
+  });
+  let found = {};
+  array.forEach(el =>{
+    let searchItem = k - el;
+    if(hash[searchItem] && !found[searchItem]){
+      pairs.push([searchItem, el]);
+      found[searchItem] = true;
+      found[el] = true;
+    }
+  });
+  return pairs;
+};
 //
 // // Given a matrix of integers and coordinates of a rectangular region within the matrix.
 // // Find the sum of numbers falling inside the rectangle.
 // // Time complexity: O(number of rows * number of columns).
-// Algorithms.matrixRegionSum = function (matrix, topLeftCoords, bottomRightCoords) {
-//   let matrixSum = 0;
-//   for(let i = topLeftCoords[0]; i < bottomRightCoords[0]; i++){
-//     for(let j = topLeftCoords[1]; j < bottomRightCoords[1]; j++){
-//       matrixSum += matrix[i][j];
-//     }
-//   }
-//   return matrixSum;
-// };
+Algorithms.matrixRegionSum = function (matrix, topLeftCoords, bottomRightCoords) {
+  let matrixSum = 0;
+  for(let i = topLeftCoords[0]; i < bottomRightCoords[0] + 1; i++){
+    for(let j = topLeftCoords[1]; j < bottomRightCoords[1] + 1; j++){
+      matrixSum += matrix[i][j];
+    }
+  }
+  return matrixSum;
+};
 
 
 
