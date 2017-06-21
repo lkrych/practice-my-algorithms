@@ -46,7 +46,11 @@ Algorithms.isPalindrome = function (string) {
 // It folds the alphabet in half and uses the adjacent letter.
 // a <=> z, b <=> y, c <=> x, m <=> n.
 Algorithms.foldingCipher = function (string) {
-
+  const alphabet = "abcdefghijklmnopqrstuvwxyz".split('');
+  string.chars.map( ch => {
+    let srch_idx = 25 - alphabet.indexOf(ch);
+    return alphabet[srch_idx];
+  });
 };
 
 // Write a method that finds all the unique substrings for a word.
