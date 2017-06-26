@@ -181,6 +181,239 @@ Algorithms.matrixRegionSum = function (matrix, topLeftCoords, bottomRightCoords)
   return matrixSum;
 };
 
+//Implement an algorithm to determine if a string has all unique characters. What if you cannot use
+//additional data structures?
 
+//use a hash to keep track of character count, alternatively you could use an array of length 25.
 
+const createAlphaHash = () => {
+  let hash = {};
+  "abcdefghijklmnopqrstuvwxyz".split('').forEach((ch) => {hash[ch] = 0; });
+};
+
+ Algorithms.uniqChars = function(str){
+  let hash = createAlphaHash(); //O(1)
+  str.forEach((ch) => {hash[ch] = hash[ch]++; });
+  //O(n) Optimization would be to exit out of assignment early if count > 1
+  Object.keys(hash).forEach(ch => { //O(1)
+    if (hash[ch] > 1){
+      return false;
+    }
+  });
+  return true;
+};
+
+//Implement a function reverseChar which reverses a string
+
+//Naive implementation takes O(n)
+Algorithms.reverseChar = function(str){
+  let reverse = [];
+  let strArr = str.split(''); // O(n)
+  for(let i = str.length - 1; i >= 0; i--){ //O(n)
+    reverse.push(strArr[i]);
+  }
+  return reverse;
+};
+
+//Optimized algorithm completes in O(n/2) time.
+Algorithms.reverseCharBetter = function(str){
+  let idx1 = 0;
+  let idx2 = str.length - 1;
+  while(idx1 < idx2){
+    let tmp = idx1;
+    str[idx1] = str[idx2];
+    str[idx2] = str[tmp];
+    idx1++;
+    idx2--;
+  }
+  return str;
+};
+
+//Given two strings, write a method to decide if one is a permutation of the other.
+
+//Initial strategy is to get char count of each string and then compare char counts to each other. This will take O(n) time.
+
+Algorithms.permutation = function(str1,str2){
+  if(str1.length !== str2.length){
+    return false;
+  }
+  let str1Hash = createAlphaHash(); //O(1)
+  let str2Hash = createAlphaHash(); //O(1)
+
+  str1.forEach((ch) => {str1Hash[ch] = str1Hash[ch]++; }); //O(n)
+  str2.forEach((ch) => {str2Hash[ch] = str2Hash[ch]++; }); //O(n)
+
+  Object.keys(str1Hash).forEach(key => { //O(1)
+    if(str1Hash[key] !== str2Hash[key]){
+      return false;
+    }
+  });
+
+  return true;
+};
+
+//Write a method to replace all spaces in a string with '%20'. You may assume that the string has sufficient spaces
+//at the end of the string to hold the additional characters//Do this operation in place?
+
+Algorithms.insertSpace = function(str){
+  let strArray = str.split(' ');
+  return strArray.join('%20');
+};
+
+//Implement a method to perform basic string compression using the counts of repeated characters
+//ex: aabcccccaaa would ecome a2b1c5a3, if the "compressed" string would not become smaller than the original string
+//return the original string
+
+Algorithms.simpleCompression = function(str){
+  const strArray = str.split('');
+  let compressed = [];
+
+  let currentChar = strArray[0];
+  let currentCharCount = 0;
+  for (let i = 1; i < strArray; i++){ //O(n)
+    if(currentChar === strArray[i]){
+      currentCharCount++;
+    }else{
+      compressed.push(currentChar);
+      compressed.push(currentCharCount);
+      currentChar = strArray[i];
+      currentCharCount = 1;
+    }
+  }
+  if (compressed.length > str.length){
+    return str;
+  }else{
+    return compressed.join('');
+  }
+};
+
+//Given an image represented by a NxN matrix, where each pixel in the image is 4 bytes, write a method to rotate the image by 90 degrees
+//Can you do this in place?
+
+//This is a matrix transformation. Switch rows with columns
+// 1 2 3  1 4 7 input is a nested array [[1,2,3],[4,5,6],[7,8,9]]
+// 4 5 6  2 5 8
+// 7 8 9  3 6 9
+
+Algorithms.rotateImage = function(matrix){ // O(N^2)
+  for(let i = 0; i < matrix[0].length; i++){
+    for(let j = i; j < matrix.length; j++){
+      let tmp = matrix[i][j];
+      matrix[i][j] = matrix[j][i];
+      matrix[j][i] = tmp;
+
+    }
+  }
+  return matrix;
+};
+
+//Write an algorithm such that if an element in an MxN matrix is 0, its entire row and column are set to 0.
+
+//if you hit a zero, set all elements in that row to zero, save the col idx in a hash and set 0's to subsequent columns.
+//is there a way to do this where you don't have to go through the array twice?
+Algorithms.zeroCheck = function(matrix){
+  let zeroCols = {};
+  let zeroRows = {};
+
+  matrix.forEach((row, idx1) => {
+    row.forEach((colVal, idx2) => {
+      if (matrix[idx1][idx2] === 0){
+        matrix[idx1][idx2] = 0;
+        zeroRows[idx1] = true;
+        zeroCols[idx2] = true;
+      }
+      if(zeroCols[idx2]){ // paint over the columns first
+        matrix[idx1][idx2] = 0;
+      }
+    });
+  });
+ //prevent from wiping out columns that are set to 0
+  matrix.forEach((row, idx1) => {
+    row.forEach((colVal, idx2) => {
+      if (matrix[idx1][idx2] === 0){
+        matrix[idx1][idx2] = 0;
+        zeroRows[idx1] = true;
+        zeroCols[idx2] = true;
+      }
+      if(zeroCols[idx1]){ // paint over the rows
+        matrix[idx1][idx2] = 0;
+      }
+    });
+  });
+  return matrix;
+};
+
+//Assume you have a method isSubstring which checks if one word is a substring of another, Given two strings,
+//s1 & s2, write code to check if s2 is a rotation of s1 using only one call to isSubstring
+//ex: "waterbottle" is a rotation of "erbottlewat"
+
+//This solution is super clever, first make sure they are the same length, return false if they aren't
+//Next you need to observe that s2, the rotated string will necessarily be a substring of s1s1
+//
+
+Algorithms.isRotation = function(str1,str2){
+  if (str1.length !== str2.length){
+    return false;
+  }
+  let concat = str1 + str1;
+  concat.isSubstring(str2);
+};
+
+// String.protoype.isSubstring = function(str){
+//   let idx1 = this.indexOf(str[0]);
+//   for(let i = 0; i < str.length; i++){
+//     if(this[idx1] !== str[i]){
+//       return false;
+//     }
+//     idx1++;
+//   }
+//   return true;
+// };
+
+//1) Write code to remove duplicates from an unsorted linked list,
+// strategy, iterate through nodes, if the node has been seen, delete it
+
+Algorithms.deleteNode = function(nodeToDelete, previousNode){
+  previousNode.next = nodeToDelete.next;
+};
+
+Algorithms.removeDuplicates = function(node, alreadySeen = {}){
+  let currentNode = node;
+  let previousNode = null;
+  alreadySeen[currentNode] = true;
+  while(node.next !== null){
+    previousNode = node;
+    currentNode = node.next;
+    if (alreadySeen[currentNode]){
+      Algorithms.deleteNode(previousNode, currentNode);
+    }
+    alreadySeen[currentNode] = true;
+  }
+};
+//1 1/2) How would you solve this problem if a temporary buffer is not allowed
+
+//2) implement an algorithm to find the kth to last element of a singly-linked List
+//use a heap?
+
+//Strategy: create two pointers, move the first pointer k elements, then move the pointers in tandem until you reach null,
+//the second pointer will be at the kth to last element;
+
+//3) implement an algorithm to delete a node in th emiddle of a singly linked list given only access to that node
+
+//Strategy: Super cool! You will never have access to the previous node, so your strategy is to copy the information from the
+//next node to your currentNode, delete the next node!
+
+//4) write code to partition a linked list around a value x, such that all nodes less than x come before all nodes greater than or equal to x
+
+//5) You have two numbers represented by a linked list, where each node contains a single digit
+//The digits are stored in reverse order, such that the 1's digit is at the head of the list.
+//Write a function that adds the two numbers and returns the sum as a linked list!
+//EX: (7-> 1 -> 6) + (5-> 9 -> 2) = 617 + 295 = (2 -> 1 -> 9)
+
+//5 1/2) Do this when the digits are stored in forward order.
+
+//6) Given a circular linked list, implement an algorithm which rturns the node at the beginning of the oop
+// EX: A-> B -> C -> D -> E -> C returns C
+
+//7)Implement a function to check if a linked list is a palindrome
 })();

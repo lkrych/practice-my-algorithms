@@ -132,4 +132,30 @@ describe("matrixRegionSum", function() {
   });
 });
 
-// Dynamic programming practice
+describe("rotateImage", function() {
+  it("should rotate the matrix", function() {
+    var matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+    var rotated = [[1, 4, 7],[2, 5, 8],[3, 6, 9]];
+    expect(Algorithms.rotateImage(matrix)).toEqual(rotated);
+  });
+
+  it("should rotate the matrix", function() {
+    var matrix = [[2, 3, 4], [3, 4, 5], [4, 5, 6]];
+    expect(Algorithms.rotateImage(matrix)).toEqual(matrix);
+  });
+});
+
+describe("isRotation", function() {
+  it("should detect valid rotations", function() {
+    expect(Algorithms.isRotation("waterbottle","erbottlewat")).toBe(true);
+    expect(Algorithms.isRotation("byzantine","antinebyz")).toBe(true);
+    expect(Algorithms.isRotation("cheshire","shireche")).toBe(true);
+  });
+
+  it("isRotation should detect invalid rotations", function() {
+
+    expect(Algorithms.isRotation("cat","candlebra")).toBe(false);
+    expect(Algorithms.isRotation("catchall","acatchll")).toBe(false);
+    expect(Algorithms.isRotation("salinger","mandsala")).toBe(false);
+  });
+});
