@@ -166,7 +166,6 @@ describe("bubbleSort", function() {
     expect(Algorithms.bubbleSort([5,4,3,2,1,6])).toEqual([1,2,3,4,5,6]);
     expect(Algorithms.bubbleSort([5,3,6,2,4,1])).toEqual([1,2,3,4,5,6]);
   });
-
 });
 
 describe("mergeSort", function() {
@@ -175,5 +174,28 @@ describe("mergeSort", function() {
     expect(Algorithms.mergeSort([5,4,3,2,1,6])).toEqual([1,2,3,4,5,6]);
     expect(Algorithms.mergeSort([5,3,6,2,4,1])).toEqual([1,2,3,4,5,6]);
   });
+});
 
+describe("quickSort", function() {
+  it("sort arrays correctly!", function() {
+    expect(Algorithms.quickSort([5,4,3,2,1])).toEqual([1,2,3,4,5]);
+    expect(Algorithms.quickSort([5,4,3,2,1,6])).toEqual([1,2,3,4,5,6]);
+    expect(Algorithms.quickSort([5,3,6,2,4,1])).toEqual([1,2,3,4,5,6]);
+  });
+});
+
+// describe("quickSort in Place", function() {
+//   it("sort arrays correctly!", function() {
+//     expect(Algorithms.inPlaceQuickSort([5,4,3,2,1])).toEqual([1,2,3,4,5]);
+//     expect(Algorithms.inPlaceQuickSort([5,4,3,2,1,6])).toEqual([1,2,3,4,5,6]);
+//     expect(Algorithms.inPlaceQuickSort([5,3,6,2,4,1])).toEqual([1,2,3,4,5,6]);
+//   });
+// });
+
+describe("selectionSort", function() {
+  it("sort arrays correctly!", function() {
+    expect(Algorithms.selectionSort([5,4,3,2,1])).toEqual([1,2,3,4,5]);
+    expect(Algorithms.selectionSort([5,4,3,2,1,6])).toEqual([1,2,3,4,5,6]);
+    expect(Algorithms.selectionSort([5,3,6,2,4,1])).toEqual([1,2,3,4,5,6]);
+  });
 });

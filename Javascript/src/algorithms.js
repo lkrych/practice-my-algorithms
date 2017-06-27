@@ -471,7 +471,66 @@ Algorithms.merge = function(arr1, arr2){
 };
 //quick_sort
 
+Algorithms.quickSort = function(array){
+  if(array.length <= 1){
+    return array;
+  }
+  const partition = array[0];
+  const left = array.slice(1).filter(el => el <= partition);
+  const right = array.slice(1).filter(el => el > partition);
+  const sortedLeft = Algorithms.quickSort(left);
+  const sortedRight = Algorithms.quickSort(right);
+  return sortedLeft.concat(partition).concat(sortedRight);
+};
+
+//in-place quickSort
+
+//Most of the logic of the in-place quicksort is done in the partitioning step.
+// Algorithms.partition = function(array){
+//   let partition = array[array.length - 1];
+//   let partIdx = 0;
+//   for(let i = 0; i < array.length - 1; i++){
+//     if(array[i] < partition){
+//       Algorithms.swap(array, partIdx, i)
+//       partIdx ++;
+//     }
+//   }
+//   Algorithms.swap(array, partIdx, array.length -1);
+//   return partIdx;
+// };
+//
+// Algorithms.inPlaceQuickSort = function(array){
+//   if(array.length <= 1){
+//     return array;
+//   }
+//
+//   let partIdx = Algorithms.partition(array);
+//   Algorithms.inPlaceQuickSort(array.slice(0,partIdx));
+//   Algorithms.inPlaceQuickSort(array.slice(partIdx + 1));
+//   return array;
+// }
+
 //selection_sort
+
+  Algorithms.minimum = function(array){
+    let min = 0;
+    for(let i = 0; i < array.length; i++){
+      if (array[i] < array[min]){
+        min = i;
+      }
+    }
+    return min;
+  };
+
+  Algorithms.selectionSort = function(array){
+    let idx = 0;
+    while(idx < array.length){
+      let min = Algorithms.minimum(array.slice(idx));
+      Algorithms.swap(array, idx, idx + min);
+      idx++;
+    }
+    return array;
+  };
 
 //heap_sort
 
