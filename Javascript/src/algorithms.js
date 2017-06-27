@@ -416,4 +416,63 @@ Algorithms.removeDuplicates = function(node, alreadySeen = {}){
 // EX: A-> B -> C -> D -> E -> C returns C
 
 //7)Implement a function to check if a linked list is a palindrome
+
+//sorting Algorithms
+
+//bubble_sort
+
+//Strategy, do comparisons for each idx, bubble until the value can't be switched
+
+Algorithms.swap = function(array,idx1,idx2){
+  const tmp = array[idx1];
+  array[idx1] = array[idx2];
+  array[idx2] = tmp;
+  return array;
+};
+
+Algorithms.bubbleSort = function(array){
+  let idx = 0;
+  let sorted = false;
+  while(sorted === false){
+    sorted = true;
+    for(let i = 0; i < array.length - 1; i++){
+      if(array[i] > array[i + 1]){
+        array = Algorithms.swap(array,i, i+1);
+        sorted = false;
+      }
+    }
+    idx++;
+  }
+  return array;
+};
+
+
+//merge_sort
+Algorithms.mergeSort = function(array){
+  if (array.length <= 1){
+    return array;
+  }
+  const mid = Math.floor(array.length/2);
+  const sortedLeft = Algorithms.mergeSort(array.slice(0,mid));
+  const sortedRight = Algorithms.mergeSort(array.slice(mid));
+  return Algorithms.merge(sortedLeft, sortedRight);
+};
+
+Algorithms.merge = function(arr1, arr2){
+  let sorted = [];
+  while(arr1.length > 0 && arr2.length > 0){
+    if(arr1[0] > arr2[0]){
+      sorted.push(arr2.shift());
+    }else{
+      sorted.push(arr1.shift());
+    }
+  }
+  return sorted.concat(arr1).concat(arr2);
+};
+//quick_sort
+
+//selection_sort
+
+//heap_sort
+
 })();
